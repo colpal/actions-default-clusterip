@@ -1,4 +1,4 @@
-# PredChem Default Service Building action
+# Default Service ClusterIP Builder action
 
 Creates and maintains a default ClusterIP service for specified workload
 
@@ -42,8 +42,27 @@ The name of the target Kubernetes cluster namespace
 
 ## Example usage
 
-```ylm
-uses: colpal/actions-name
-    with: 
-    input_one: 
+```yaml
+name: Create default ClusterIP service
+on: [push]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: colpal/actions-kubectl@v1.0.3
+        env:
+          GCP_CREDENTIALS: ${{ secrets.GCP_CREDENTIALS }}
+          GCP_PROJECT: gcp-project-id
+          GKE_CLUSTER_NAME: cluster-name
+        with:
+          args: version
+      - uses: colpal/actions-default-clusterip
+        env:
+          DEPLOYMENT_NAME: deployment-name
+          DEPLOYMENT_PORT: 8080
+          GCP_CREDENTIALS: ${{ secrets.GCP_CREDENTIALS }}
+          GCP_PROJECT: gcp-project-id
+          GKE_CLUSTER: cluster-name
+          GKE_NAMESPACE: dev
 ```
