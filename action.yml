@@ -1,10 +1,25 @@
-name: 'actions-template'
-author: ''
-description: 'description'
+name: 'predchem-default-clusterip'
+author: 'Richard Yawger'
+description: 'Create a simple default ClusterIP service for a given workload'
 inputs:
-  input_one:
-    description: ''
-    required: false
+  deployment_name:
+    description: 'Name of the Deployment to create the service for'
+    required: true
+  deployment_port:
+    description: 'TCP port that the Deployment runs on'
+    required: true
+  gcr_service_account:
+    description: 'Service account secret for the GCR service user'
+    required: true
+  gcr_project:
+    description: 'Project which contains the target cluster'
+    required: true
+  gke_cluster:
+    description: 'Target cluster name'
+    required: true
+  gke_namespace:
+    description: 'Target cluster namespace'
+    required: true
 runs:
   using: 'docker'
   image: 'Dockerfile'

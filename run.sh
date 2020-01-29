@@ -3,11 +3,11 @@
 set -e
 
 # Required vars for service
-if [ -z "${DEPLOYMENT_NAME}" ]; then
+if [ -z "${DEPLOYMENT_NAME-}" ]; then
     echo "DEPLOYMENT_NAME not specified. Exiting."
     exit 1
 fi
-if [ -z "${DEPLOYMENT_PORT}" ]; then
+if [ -z "${DEPLOYMENT_PORT-}" ]; then
     echo "DEPLOYMENT_PORT not specified. Exiting."
     exit 1
 fi
@@ -21,8 +21,12 @@ if [ -z "${GCP_PROJECT-}" ]; then
     echo "GCP_PROJECT not found. Exiting."
     exit 1
 fi
-if [ -z "${GKE_CLUSTER_NAME-}" ]; then
-    echo "GKE_CLUSTER_NAME not found. Exiting."
+if [ -z "${GKE_CLUSTER-}" ]; then
+    echo "GKE_CLUSTER not found. Exiting."
+    exit 1
+fi
+if [ -z "${GKE_NAMESPACE-}" ]; then
+    echo "GKE_NAMESPACE not found. Exiting."
     exit 1
 fi
 
@@ -38,4 +42,5 @@ gcloud container clusters get-credentials $GKE_CLUSTER_NAME --zone $CZONE --proj
 sed -i 's/${temp_name}/'${DEPLOYMENT_NAME}'/g' template.yaml
 sed 's/${temp_port}/'${DEPLOYMENT_PORT}'/g' template.yaml > service.yaml
 
+kubectl config set-context --current --namespace=${GKE_NAMESPACE}
 kubectl apply -f ./service.yaml
