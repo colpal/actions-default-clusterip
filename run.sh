@@ -39,8 +39,8 @@ CZONE=$(gcloud container clusters list --format="get(location)" --filter="name=$
 gcloud container clusters get-credentials $GKE_CLUSTER_NAME --zone $CZONE --project $GCP_PROJECT
 
 # build template file
-sed -i 's/${temp_name}/'${DEPLOYMENT_NAME}'/g' template.yaml
-sed 's/${temp_port}/'${DEPLOYMENT_PORT}'/g' template.yaml > service.yaml
+sed -i 's/${temp_name}/'${DEPLOYMENT_NAME}'/g' /setup/template.yaml
+sed 's/${temp_port}/'${DEPLOYMENT_PORT}'/g' /setup/template.yaml > /setup/service.yaml
 
 kubectl config set-context --current --namespace=${GKE_NAMESPACE}
-kubectl apply -f ./service.yaml
+kubectl apply -f /setup/service.yaml

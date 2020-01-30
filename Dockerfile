@@ -9,6 +9,6 @@ LABEL com.github.actions.icon="cloud"
 
 COPY . /setup
 WORKDIR /setup
-RUN chmod +x ./run.sh
+RUN chmod +x /setup/run.sh
 
-ENTRYPOINT [ "./run.sh" ]
+ENTRYPOINT [ "/setup/run.sh" ]
