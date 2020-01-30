@@ -35,8 +35,8 @@ echo "$GCP_CREDENTIALS" | base64 -d > /tmp/service_account.json
 gcloud auth activate-service-account --key-file=/tmp/service_account.json
 gcloud config set project "$GCP_PROJECT"
 
-CZONE=$(gcloud container clusters list --format="get(location)" --filter="name=$GKE_CLUSTER_NAME")
-gcloud container clusters get-credentials $GKE_CLUSTER_NAME --zone $CZONE --project $GCP_PROJECT
+CZONE=$(gcloud container clusters list --format="get(location)" --filter="name=$GKE_CLUSTER")
+gcloud container clusters get-credentials $GKE_CLUSTER --zone $CZONE --project $GCP_PROJECT
 
 # build template file
 sed -i 's/${temp_name}/'${DEPLOYMENT_NAME}'/g' /setup/template.yaml
