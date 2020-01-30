@@ -1,11 +1,11 @@
 FROM gcr.io/cloud-builders/kubectl
 
-LABEL name="predchem-default-clusterip"
-LABEL version="1.0.1"
-LABEL com.github.actions.name="PredChem ClusterIP builder"
-LABEL com.github.actions.description="GitHub action to build default ClusterIP svc"
-LABEL com.github.actions.color="green"
-LABEL com.github.actions.icon="cloud"
+LABEL name="predchem-default-clusterip" \
+	  version="1.0.1" \
+	  com.github.actions.name="PredChem ClusterIP builder" \
+	  com.github.actions.description="GitHub action to build default ClusterIP svc" \
+	  com.github.actions.color="green" \
+	  com.github.actions.icon="cloud"
 
 COPY . /setup
 WORKDIR /setup
